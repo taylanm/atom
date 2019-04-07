@@ -52,6 +52,7 @@ async function getReleaseVersion () {
     !isReleaseBranch &&
     (process.env.IS_SIGNED_ZIP_BRANCH ||
      buildBranch.startsWith('electron-') ||
+     buildBranch === 'test-build' ||
      buildBranch === 'master' && !process.env.SYSTEM_PULLREQUEST_PULLREQUESTNUMBER)
   console.log(`##vso[task.setvariable variable=IsReleaseBranch;isOutput=true]${isReleaseBranch}`)
   console.log(`##vso[task.setvariable variable=IsSignedZipBranch;isOutput=true]${isSignedZipBranch}`)
