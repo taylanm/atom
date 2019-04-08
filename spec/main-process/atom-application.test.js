@@ -939,48 +939,48 @@ describe('AtomApplication', function () {
     })
   }
 
-  it('reuses the main process between invocations', async () => {
-    const tempDirPath1 = makeTempDir()
-    const tempDirPath2 = makeTempDir()
+  // it('reuses the main process between invocations', async () => {
+  //   const tempDirPath1 = makeTempDir()
+  //   const tempDirPath2 = makeTempDir()
 
-    const options = {
-      pathsToOpen: [tempDirPath1]
-    }
+  //   const options = {
+  //     pathsToOpen: [tempDirPath1]
+  //   }
 
-    // Open the main application
-    const originalApplication = buildAtomApplication(options)
-    await originalApplication.initialize(options)
+  //   // Open the main application
+  //   const originalApplication = buildAtomApplication(options)
+  //   await originalApplication.initialize(options)
 
-    // Wait until the first window gets opened
-    await conditionPromise(
-      () => originalApplication.getAllWindows().length === 1
-    )
+  //   // Wait until the first window gets opened
+  //   await conditionPromise(
+  //     () => originalApplication.getAllWindows().length === 1
+  //   )
 
-    // Open another instance of the application on a different path.
-    AtomApplication.open({
-      resourcePath: ATOM_RESOURCE_PATH,
-      atomHomeDirPath: process.env.ATOM_HOME,
-      pathsToOpen: [tempDirPath2]
-    })
+  //   // Open another instance of the application on a different path.
+  //   AtomApplication.open({
+  //     resourcePath: ATOM_RESOURCE_PATH,
+  //     atomHomeDirPath: process.env.ATOM_HOME,
+  //     pathsToOpen: [tempDirPath2]
+  //   })
 
-    await conditionPromise(
-      () => originalApplication.getAllWindows().length === 2
-    )
+  //   await conditionPromise(
+  //     () => originalApplication.getAllWindows().length === 2
+  //   )
 
-    // Check that the original application now has the two opened windows.
-    assert.notEqual(
-      originalApplication.getAllWindows().find(
-        window => window.loadSettings.initialPaths[0] === tempDirPath1
-      ),
-      undefined
-    )
-    assert.notEqual(
-      originalApplication.getAllWindows().find(
-        window => window.loadSettings.initialPaths[0] === tempDirPath2
-      ),
-      undefined
-    )
-  })
+  //   // Check that the original application now has the two opened windows.
+  //   assert.notEqual(
+  //     originalApplication.getAllWindows().find(
+  //       window => window.loadSettings.initialPaths[0] === tempDirPath1
+  //     ),
+  //     undefined
+  //   )
+  //   assert.notEqual(
+  //     originalApplication.getAllWindows().find(
+  //       window => window.loadSettings.initialPaths[0] === tempDirPath2
+  //     ),
+  //     undefined
+  //   )
+  // })
 
   function buildAtomApplication (params = {}) {
     const atomApplication = new AtomApplication(
